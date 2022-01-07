@@ -15,13 +15,14 @@ int main()
 	{
 		int key;
 		fscanf_s(file, "%d", &key);
-		addInList(list, newElement(key));
+		addToList(list, newElement(key));
 	}
 
 	fclose(file);
 
 	printList(list);
 	sortAndPrintList(list);
+	printList(list);
 
 	releaseList(list);
 	return 0;
@@ -42,7 +43,7 @@ void releaseList(List* list)
 	free(list);
 }
 
-void addInList(List* list, Element item)
+void addToList(List* list, Element item)
 {
 	list->items[list->count++] = item;
 }
@@ -63,7 +64,17 @@ void printList(List* list)
 {
 	for (int i = 0; i < list->capacity; i++)
 	{
-		printf("%2d ", list->items[i].key);
+		printf(" %2d ", list->items[i].key);
+	}
+
+	printf("\n");
+}
+
+void printListWithHeader(List* list, int left, int right)
+{
+	for (int i = 0; i < list->capacity; i++)
+	{
+		printf("%s%2d%s", (i == left) ? "[" : " ", list->items[i].key, (i == right) ? "]" : " ");
 	}
 
 	printf("\n");
@@ -75,15 +86,16 @@ void sortAndPrintList(List* list)
 
 	for (int i = 1; i < list->count; i++)
 	{
-		Element item = items[i];
-		
+		Element temp = items[i];
+
 		int j;
-		for (j = i - 1; j >= 0 && items[j].key > item.key; j--)
+		for (j = i - 1; j >= 0 && items[j].key > items[i].key; j--)
 		{
 			items[j + 1] = items[j];
 		}
 
-		items[j + 1] = item;
-		printList(list);
+		items[j + 1] = temp;
+		
+		printListWithHeader(list, 0, i);
 	}
 }

@@ -13,7 +13,7 @@ int main()
 	{
 		int key;
 		fscanf_s(file, "%d", &key);
-		pushInBinTree(&binTree, newElement(key));
+		pushIntoBinTree(&binTree, newElement(key));
 		printf("PUSH(%2d) : ", key);
 		printBinTree(binTree);
 		printf("\n");
@@ -34,7 +34,7 @@ void releaseBinTree(BinTreeNode* root)
 	free(root);
 }
 
-void pushInBinTree(BinTreeNode** root, Element item)
+void pushIntoBinTree(BinTreeNode** root, Element item)
 {
 	if (*root == NULL)
 	{
@@ -48,11 +48,11 @@ void pushInBinTree(BinTreeNode** root, Element item)
 
 	if ((*root)->item.key >= item.key)
 	{
-		pushInBinTree(&(*root)->leftChild, item);
+		pushIntoBinTree(&(*root)->leftChild, item);
 	}
 	else
 	{
-		pushInBinTree(&(*root)->rightChild, item);
+		pushIntoBinTree(&(*root)->rightChild, item);
 	}
 }
 

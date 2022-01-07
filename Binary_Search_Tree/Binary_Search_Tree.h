@@ -16,7 +16,7 @@ typedef struct BinTreeNode
 
 void releaseBinTree(BinTreeNode*);
 
-void pushInBinTree(BinTreeNode**, Element);
+void pushIntoBinTree(BinTreeNode**, Element);
 Element newElement(int);
 Element emptyElement();
 

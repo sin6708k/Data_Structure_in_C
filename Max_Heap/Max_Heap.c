@@ -15,7 +15,7 @@ int main()
 	{
 		int key;
 		fscanf_s(file, "%d", &key);
-		pushInHeap(heap, newElement(key));
+		pushIntoHeap(heap, newElement(key));
 		printf("PUSH(%2d)\n", key);
 		printHeap(heap);
 	}
@@ -24,7 +24,7 @@ int main()
 	
 	while (heap->count > 0)
 	{
-		Element item = popInHeap(heap);
+		Element item = popFromHeap(heap);
 		printf("POP(%2d)\n", item.key);
 		printHeap(heap);
 	}
@@ -47,14 +47,14 @@ void releaseHeap(Heap* heap)
 	free(heap);
 }
 
-void pushInHeap(Heap* heap, Element newItem)
+void pushIntoHeap(Heap* heap, Element newItem)
 {
 	if (heap == NULL)
 		return;
 
 	Element* items = heap->items;
-	int i = ++heap->count;
 
+	int i = ++heap->count;
 	for (; i != 1; i /= 2)
 	{
 		if (newItem.key < items[i / 2].key)
@@ -66,7 +66,7 @@ void pushInHeap(Heap* heap, Element newItem)
 	items[i] = newItem;
 }
 
-Element popInHeap(Heap* heap)
+Element popFromHeap(Heap* heap)
 {
 	if (heap == NULL)
 		return emptyElement();
@@ -74,11 +74,10 @@ Element popInHeap(Heap* heap)
 	Element* items = heap->items;
 
 	Element deletedItem = items[1];
-	Element lastItem = items[heap->count];
+	Element temp = items[heap->count];
 	items[heap->count--] = emptyElement();
 
 	int parent = 1;
-
 	for (int child = 2; child <= heap->count; parent = child, child *= 2)
 	{
 		if (child + 1 <= heap->count && items[child].key < items[child + 1].key)
@@ -86,18 +85,18 @@ Element popInHeap(Heap* heap)
 			child++;
 		}
 
-		if (lastItem.key >= items[child].key)
+		if (temp.key >= items[child].key)
 			break;
 
 		items[parent] = items[child];
 	}
 
-	items[parent] = lastItem;
+	items[parent] = temp;
 
 	return deletedItem;
 }
 
-Element peekInHeap(const Heap* heap)
+Element peekAtHeap(const Heap* heap)
 {
 	if (heap == NULL)
 		return emptyElement();

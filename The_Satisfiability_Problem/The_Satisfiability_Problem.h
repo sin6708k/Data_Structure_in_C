@@ -22,6 +22,6 @@ void releaseBinTree(BinTreeNode*);
 void setValue(BinTreeNode*, int, int, int);
 int evaluate(BinTreeNode*);
 
-void pushInStack(StackNode**, BinTreeNode*);
-BinTreeNode* popInStack(StackNode**);
-BinTreeNode* peekInStack(const StackNode*);
+void pushIntoStack(StackNode**, BinTreeNode*);
+BinTreeNode* popFromStack(StackNode**);
+BinTreeNode* peekAtStack(const StackNode*);

@@ -41,18 +41,18 @@ BinTreeNode* createBinTree(char* postfix)
 
 		if (*symbol == '~') // NOT
 		{
-			binTree->rightChild = popInStack(&stack);
+			binTree->rightChild = popFromStack(&stack);
 			binTree->leftChild = NULL;
 		}
 		else if (*symbol == '&') // AND
 		{
-			binTree->rightChild = popInStack(&stack);
-			binTree->leftChild = popInStack(&stack);
+			binTree->rightChild = popFromStack(&stack);
+			binTree->leftChild = popFromStack(&stack);
 		}
 		else if (*symbol == '|') // OR
 		{
-			binTree->rightChild = popInStack(&stack);
-			binTree->leftChild = popInStack(&stack);
+			binTree->rightChild = popFromStack(&stack);
+			binTree->leftChild = popFromStack(&stack);
 		}
 		else
 		{
@@ -60,10 +60,10 @@ BinTreeNode* createBinTree(char* postfix)
 			binTree->leftChild = NULL;
 		}
 
-		pushInStack(&stack, binTree);
+		pushIntoStack(&stack, binTree);
 	}
 
-	return popInStack(&stack);
+	return popFromStack(&stack);
 }
 
 void releaseBinTree(BinTreeNode* root)
@@ -131,7 +131,7 @@ int evaluate(BinTreeNode* root)
 	}
 }
 
-void pushInStack(StackNode** top, BinTreeNode* data)
+void pushIntoStack(StackNode** top, BinTreeNode* data)
 {
 	StackNode* newNode = malloc(sizeof(*newNode));
 	newNode->data = data;
@@ -148,7 +148,7 @@ void pushInStack(StackNode** top, BinTreeNode* data)
 	*top = newNode;
 }
 
-BinTreeNode* popInStack(StackNode** top)
+BinTreeNode* popFromStack(StackNode** top)
 {
 	if (*top == NULL)
 		return NULL;
@@ -160,7 +160,7 @@ BinTreeNode* popInStack(StackNode** top)
 	return binTree;
 }
 
-BinTreeNode* peekInStack(const StackNode* top)
+BinTreeNode* peekAtStack(const StackNode* top)
 {
 	if (top == NULL)
 		return NULL;

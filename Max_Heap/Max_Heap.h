@@ -17,9 +17,9 @@ typedef struct Heap
 Heap* newHeap(int);
 void releaseHeap(Heap*);
 
-void pushInHeap(Heap*, Element);
-Element popInHeap(Heap*);
-Element peekInHeap(const Heap*);
+void pushIntoHeap(Heap*, Element);
+Element popFromHeap(Heap*);
+Element peekAtHeap(const Heap*);
 Element newElement(int);
 Element emptyElement();
 

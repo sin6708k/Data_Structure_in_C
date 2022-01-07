@@ -17,9 +17,10 @@ typedef struct List
 List* newList(int);
 void releaseList(List*);
 
-void addInList(List*, Element);
+void addToList(List*, Element);
 Element newElement(int);
 Element emptyElement();
 
 void printList(List*);
+void printListWithHeader(List*, int, int);
 void sortAndPrintList(List*);
