@@ -89,7 +89,7 @@ void sortAndPrintList(List* list)
 		Element temp = items[i];
 
 		int j;
-		for (j = i - 1; j >= 0 && items[j].key > items[i].key; j--)
+		for (j = i - 1; j >= 0 && items[j].key > temp.key; j--)
 		{
 			items[j + 1] = items[j];
 		}
