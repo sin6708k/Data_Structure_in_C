@@ -82,7 +82,8 @@ void printListWithHeader(List* list, int left, int right)
 
 void sortAndPrintList(List* list, int left, int right)
 {
-	if (left >= right) return;
+	if (left >= right)
+		return;
 
 	int i = left;
 	int j = right + 1;
@@ -94,7 +95,8 @@ void sortAndPrintList(List* list, int left, int right)
 		do i++; while (items[i].key < items[left].key);
 		do j--; while (items[j].key > items[left].key);
 		
-		if (i >= j) break;
+		if (i >= j)
+			break;
 
 		swap(&items[i], &items[j]);
 	}
