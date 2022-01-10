@@ -62,7 +62,7 @@ Element emptyElement()
 
 void printList(List* list)
 {
-	for (int i = 0; i < list->capacity; i++)
+	for (int i = 0; i < list->count; i++)
 	{
 		printf(" %2d ", list->items[i].key);
 	}
@@ -72,7 +72,7 @@ void printList(List* list)
 
 void printListWithHeader(List* list, int left, int right)
 {
-	for (int i = 0; i < list->capacity; i++)
+	for (int i = 0; i < list->count; i++)
 	{
 		printf("%s%2d%s", (i == left) ? "[" : " ", list->items[i].key, (i == right) ? "]" : " ");
 	}

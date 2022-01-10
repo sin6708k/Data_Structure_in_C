@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{cc70e8bf-e4b8-4738-9ebf-c63099962ad5}</ProjectGuid>
-    <RootNamespace>MergeSort</RootNamespace>
+    <ProjectGuid>{6d81e3fc-5d4d-47a0-ba2e-7bdeb4b4c3d6}</ProjectGuid>
+    <RootNamespace>HeapSort</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -139,13 +139,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Merge_Sort.c" />
+    <ClCompile Include="Heap_Sort.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Merge_Sort.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="input.txt" />
+    <ClInclude Include="Heap_Sort.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
