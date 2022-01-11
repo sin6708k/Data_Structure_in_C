@@ -19,8 +19,8 @@ int main()
 	}
 
 	printGraph(graph);
-	searchAndPrintGraph(graph, 0);
-	searchAndPrintGraph(graph, 4);
+	depthFirstSearchAndPrintGraph(graph, 0);
+	depthFirstSearchAndPrintGraph(graph, 4);
 
 	releaseGraph(graph);
 	return 0;
@@ -100,7 +100,7 @@ void printEdges(const Edge* edge)
 	printEdges(edge->link);
 }
 
-void searchAndPrintGraph(const Graph* graph, int vertex)
+void depthFirstSearchAndPrintGraph(const Graph* graph, int vertex)
 {
 	if (graph == NULL)
 		return;
@@ -113,12 +113,12 @@ void searchAndPrintGraph(const Graph* graph, int vertex)
 	}
 
 	printf("DFS(%2d) : ", vertex);
-	searchAndPrintEdges(graph, vertex, visited);
+	depthFirstSearchAndPrintEdges(graph, vertex, visited);
 	printf("\n");
 	free(visited);
 }
 
-void searchAndPrintEdges(const Graph* graph, int vertex, int* visited)
+void depthFirstSearchAndPrintEdges(const Graph* graph, int vertex, int* visited)
 {
 	if (graph == NULL)
 		return;
@@ -133,7 +133,7 @@ void searchAndPrintEdges(const Graph* graph, int vertex, int* visited)
 	{
 		if (visited[edge->vertex] == 0)
 		{
-			searchAndPrintEdges(graph, edge->vertex, visited);
+			depthFirstSearchAndPrintEdges(graph, edge->vertex, visited);
 		}
 	}
 }

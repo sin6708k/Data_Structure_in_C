@@ -9,62 +9,62 @@ int main()
 
 	int capacity;
 	fscanf_s(file, "%d", &capacity);
-	List* list = newList(capacity);
+	List* list = createList(capacity);
 
 	for (int i = 0; i < capacity; i++)
 	{
 		int key;
 		fscanf_s(file, "%d", &key);
-		addToList(list, newElement(key));
+		addToList(list, createElement(key));
 	}
 
 	fclose(file);
 
 	printList(list);
-	sortAndPrintList(list, 0, list->count - 1);
+	mergeSortAndPrint(list, 0, list->count - 1);
 	printList(list);
 
 	releaseList(list);
 	return 0;
 }
 
-List* newList(int capacity)
+List* createList(int capacity)
 {
 	List* list = malloc(sizeof(*list));
-	list->items = malloc(sizeof(*list->items) * capacity);
+	list->arr = malloc(sizeof(*list->arr) * capacity);
 	list->count = 0;
 	list->capacity = capacity;
 	return list;
 }
 
-void releaseList(List* list)
+Element createElement(int key)
 {
-	free(list->items);
-	free(list);
-}
-
-void addToList(List* list, Element item)
-{
-	list->items[list->count++] = item;
-}
-
-Element newElement(int key)
-{
-	Element item;
-	item.key = key;
-	return item;
+	Element element;
+	element.key = key;
+	return element;
 }
 
 Element emptyElement()
 {
-	return newElement(INT_MIN);
+	return createElement(INT_MIN);
+}
+
+void releaseList(List* list)
+{
+	free(list->arr);
+	free(list);
+}
+
+void addToList(List* list, Element element)
+{
+	list->arr[list->count++] = element;
 }
 
 void printList(List* list)
 {
 	for (int i = 0; i < list->count; i++)
 	{
-		printf(" %2d ", list->items[i].key);
+		printf(" %2d ", list->arr[i].key);
 	}
 
 	printf("\n");
@@ -74,25 +74,25 @@ void printListWithHeader(List* list, int left, int right)
 {
 	for (int i = 0; i < list->count; i++)
 	{
-		printf("%s%2d%s", (i == left) ? "[" : " ", list->items[i].key, (i == right) ? "]" : " ");
+		printf("%s%2d%s", (i == left) ? "[" : " ", list->arr[i].key, (i == right) ? "]" : " ");
 	}
 
 	printf("\n");
 }
 
-void sortAndPrintList(List* list, int left, int right)
+void mergeSortAndPrint(List* list, int left, int right)
 {
 	if (left >= right)
 		return;
 
 	int mid = (left + right) / 2;
-	sortAndPrintList(list, left, mid);
-	sortAndPrintList(list, mid + 1, right);
+	mergeSortAndPrint(list, left, mid);
+	mergeSortAndPrint(list, mid + 1, right);
 	mergeList(list, left, mid, right);
 
 	for (int i = 0; i < list->count; i++)
 	{
-		printf("%s%2d%s", (i == left) ? "[" : " ", list->items[i].key, (i == right) ? "]" : " ");
+		printf("%s%2d%s", (i == left) ? "[" : " ", list->arr[i].key, (i == right) ? "]" : " ");
 	}
 
 	printf("\n");
@@ -100,9 +100,9 @@ void sortAndPrintList(List* list, int left, int right)
 
 void mergeList(List* list, int left, int mid, int right)
 {
-	Element* items = list->items;
-	List* sortedList = newList(list->capacity);
-	Element* sortedItems = sortedList->items;
+	Element* arr = list->arr;
+	List* sortedList = createList(list->capacity);
+	Element* sortedArr = sortedList->arr;
 
 	int i = left;
 	int j = mid + 1;
@@ -110,13 +110,13 @@ void mergeList(List* list, int left, int mid, int right)
 
 	while (i <= mid && j <= right)
 	{
-		if (items[i].key <= items[j].key)
+		if (arr[i].key <= arr[j].key)
 		{
-			sortedItems[k++] = items[i++];
+			sortedArr[k++] = arr[i++];
 		}
 		else
 		{
-			sortedItems[k++] = items[j++];
+			sortedArr[k++] = arr[j++];
 		}
 	}
 
@@ -124,20 +124,20 @@ void mergeList(List* list, int left, int mid, int right)
 	{
 		for (int m = j; m <= right; m++)
 		{
-			sortedItems[k++] = items[m];
+			sortedArr[k++] = arr[m];
 		}
 	}
 	else
 	{
 		for (int m = i; m <= mid; m++)
 		{
-			sortedItems[k++] = items[m];
+			sortedArr[k++] = arr[m];
 		}
 	}
 
 	for (int m = left; m <= right; m++)
 	{
-		items[m] = sortedItems[m];
+		arr[m] = sortedArr[m];
 	}
 
 	releaseList(sortedList);

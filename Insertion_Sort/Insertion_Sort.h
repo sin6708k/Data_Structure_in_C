@@ -14,13 +14,14 @@ typedef struct List
 	int capacity;
 } List;
 
-List* newList(int);
+List* createList(int);
+Element createElement(int);
+Element emptyElement();
+
 void releaseList(List*);
 
 void addToList(List*, Element);
-Element newElement(int);
-Element emptyElement();
 
 void printList(List*);
 void printListWithHeader(List*, int, int);
-void sortAndPrintList(List*);
+void insertionSortAndPrint(List*);

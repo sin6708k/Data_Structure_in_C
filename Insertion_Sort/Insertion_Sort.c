@@ -9,26 +9,26 @@ int main()
 
 	int capacity;
 	fscanf_s(file, "%d", &capacity);
-	List* list = newList(capacity);
+	List* list = createList(capacity);
 
 	for (int i = 0; i < capacity; i++)
 	{
 		int key;
 		fscanf_s(file, "%d", &key);
-		addToList(list, newElement(key));
+		addToList(list, createElement(key));
 	}
 
 	fclose(file);
 
 	printList(list);
-	sortAndPrintList(list);
+	insertionSortAndPrint(list);
 	printList(list);
 
 	releaseList(list);
 	return 0;
 }
 
-List* newList(int capacity)
+List* createList(int capacity)
 {
 	List* list = malloc(sizeof(*list));
 	list->items = malloc(sizeof(*list->items) * capacity);
@@ -43,12 +43,12 @@ void releaseList(List* list)
 	free(list);
 }
 
-void addToList(List* list, Element item)
+void addToList(List* list, Element element)
 {
-	list->items[list->count++] = item;
+	list->items[list->count++] = element;
 }
 
-Element newElement(int key)
+Element createElement(int key)
 {
 	Element item;
 	item.key = key;
@@ -57,7 +57,7 @@ Element newElement(int key)
 
 Element emptyElement()
 {
-	return newElement(INT_MIN);
+	return createElement(INT_MIN);
 }
 
 void printList(List* list)
@@ -80,7 +80,7 @@ void printListWithHeader(List* list, int left, int right)
 	printf("\n");
 }
 
-void sortAndPrintList(List* list)
+void insertionSortAndPrint(List* list)
 {
 	Element* items = list->items;
 

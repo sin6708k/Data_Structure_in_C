@@ -9,13 +9,14 @@ int main()
 
 	int capacity;
 	fscanf_s(file, "%d", &capacity);
-	Heap* heap = newHeap(capacity);
+	Heap* heap = createHeap(capacity);
 
 	while (!feof(file))
 	{
 		int key;
 		fscanf_s(file, "%d", &key);
-		pushIntoHeap(heap, newElement(key));
+		pushIntoHeap(heap, createElement(key));
+
 		printf("PUSH(%2d)\n", key);
 		printHeap(heap);
 	}
@@ -24,8 +25,9 @@ int main()
 	
 	while (heap->count > 0)
 	{
-		Element item = popFromHeap(heap);
-		printf("POP(%2d)\n", item.key);
+		Element element = popFromHeap(heap);
+
+		printf("POP(%2d)\n", element.key);
 		printHeap(heap);
 	}
 
@@ -33,17 +35,29 @@ int main()
 	return 0;
 }
 
-Heap* newHeap(int capacity)
+Heap* createHeap(int capacity)
 {
 	Heap* heap = malloc(sizeof(*heap));
-	heap->items = malloc(sizeof(*heap->items) * (capacity + 1));
+	heap->arr = malloc(sizeof(*heap->arr) * (capacity + 1));
 	heap->count = 0;
 	return heap;
 }
 
+Element createElement(int key)
+{
+	Element element;
+	element.key = key;
+	return element;
+}
+
+Element emptyElement()
+{
+	return createElement(INT_MIN);
+}
+
 void releaseHeap(Heap* heap)
 {
-	free(heap->items);
+	free(heap->arr);
 	free(heap);
 }
 
@@ -52,7 +66,7 @@ void pushIntoHeap(Heap* heap, Element newItem)
 	if (heap == NULL)
 		return;
 
-	Element* items = heap->items;
+	Element* items = heap->arr;
 
 	int i = ++heap->count;
 	for (; i != 1; i /= 2)
@@ -71,29 +85,29 @@ Element popFromHeap(Heap* heap)
 	if (heap == NULL)
 		return emptyElement();
 
-	Element* items = heap->items;
+	Element* arr = heap->arr;
 
-	Element deletedItem = items[1];
-	Element temp = items[heap->count];
-	items[heap->count--] = emptyElement();
+	Element deletedElement = arr[1];
+	Element temp = arr[heap->count];
+	arr[heap->count--] = emptyElement();
 
 	int parent = 1;
 	for (int child = 2; child <= heap->count; parent = child, child *= 2)
 	{
-		if (child + 1 <= heap->count && items[child].key < items[child + 1].key)
+		if (child + 1 <= heap->count && arr[child].key < arr[child + 1].key)
 		{
 			child++;
 		}
 
-		if (temp.key >= items[child].key)
+		if (temp.key >= arr[child].key)
 			break;
 
-		items[parent] = items[child];
+		arr[parent] = arr[child];
 	}
 
-	items[parent] = temp;
+	arr[parent] = temp;
 
-	return deletedItem;
+	return deletedElement;
 }
 
 Element peekAtHeap(const Heap* heap)
@@ -101,19 +115,7 @@ Element peekAtHeap(const Heap* heap)
 	if (heap == NULL)
 		return emptyElement();
 
-	return heap->items[1];
-}
-
-Element newElement(int key)
-{
-	Element item;
-	item.key = key;
-	return item;
-}
-
-Element emptyElement()
-{
-	return newElement(INT_MIN);
+	return heap->arr[1];
 }
 
 void printHeap(const Heap* heap)
@@ -126,7 +128,7 @@ void printHeap(const Heap* heap)
 			n += n;
 		}
 
-		printf("%2d ", heap->items[i].key);
+		printf("%2d ", heap->arr[i].key);
 	}
 
 	printf("\n\n");

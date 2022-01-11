@@ -23,5 +23,5 @@ void addDirectedEdge(Graph*, int, int);
 
 void printGraph(const Graph*);
 void printEdges(const Edge*);
-void searchAndPrintGraph(const Graph*, int);
-void searchAndPrintEdges(const Graph*, int, int*);
+void depthFirstSearchAndPrintGraph(const Graph*, int);
+void depthFirstSearchAndPrintEdges(const Graph*, int, int*);

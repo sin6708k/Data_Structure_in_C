@@ -13,7 +13,8 @@ int main()
 	{
 		int key;
 		fscanf_s(file, "%d", &key);
-		pushIntoBinTree(&binTree, newElement(key));
+		pushIntoBinTree(&binTree, createElement(key));
+
 		printf("PUSH(%2d) : ", key);
 		printBinTree(binTree);
 		printf("\n");
@@ -22,6 +23,18 @@ int main()
 	fclose(file);
 	releaseBinTree(binTree);
 	return 0;
+}
+
+Element createElement(int key)
+{
+	Element element;
+	element.key = key;
+	return element;
+}
+
+Element emptyElement()
+{
+	return createElement(INT_MIN);
 }
 
 void releaseBinTree(BinTreeNode* root)
@@ -34,38 +47,26 @@ void releaseBinTree(BinTreeNode* root)
 	free(root);
 }
 
-void pushIntoBinTree(BinTreeNode** root, Element item)
+void pushIntoBinTree(BinTreeNode** root, Element element)
 {
 	if (*root == NULL)
 	{
 		BinTreeNode* newNode = malloc(sizeof(*newNode));
-		newNode->item = item;
+		newNode->element = element;
 		newNode->leftChild = NULL;
 		newNode->rightChild = NULL;
 		*root = newNode;
 		return;
 	}
 
-	if ((*root)->item.key >= item.key)
+	if ((*root)->element.key >= element.key)
 	{
-		pushIntoBinTree(&(*root)->leftChild, item);
+		pushIntoBinTree(&(*root)->leftChild, element);
 	}
 	else
 	{
-		pushIntoBinTree(&(*root)->rightChild, item);
+		pushIntoBinTree(&(*root)->rightChild, element);
 	}
-}
-
-Element newElement(int key)
-{
-	Element item;
-	item.key = key;
-	return item;
-}
-
-Element emptyElement()
-{
-	return newElement(INT_MIN);
 }
 
 void printBinTree(const BinTreeNode* root)
@@ -74,6 +75,6 @@ void printBinTree(const BinTreeNode* root)
 		return;
 
 	printBinTree(root->leftChild);
-	printf("%2d ", root->item.key);
+	printf("%2d ", root->element.key);
 	printBinTree(root->rightChild);
 }

@@ -9,18 +9,19 @@ typedef struct Element
 
 typedef struct Heap
 {
-	Element* items;
+	Element* arr;
 	int count;
 	int capacity;
 } Heap;
 
-Heap* newHeap(int);
+Heap* createHeap(int);
+Element createElement(int);
+Element emptyElement();
+
 void releaseHeap(Heap*);
 
 void pushIntoHeap(Heap*, Element);
 Element popFromHeap(Heap*);
 Element peekAtHeap(const Heap*);
-Element newElement(int);
-Element emptyElement();
 
 void printHeap(const Heap*);

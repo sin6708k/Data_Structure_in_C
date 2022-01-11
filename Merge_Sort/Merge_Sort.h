@@ -9,21 +9,22 @@ typedef struct Element
 
 typedef struct List
 {
-	Element* items;
+	Element* arr;
 	int count;
 	int capacity;
 } List;
 
-List* newList(int);
+List* createList(int);
+Element createElement(int);
+Element emptyElement();
+
 void releaseList(List*);
 
 void addToList(List*, Element);
-Element newElement(int);
-Element emptyElement();
 
 void printList(List*);
 void printListWithHeader(List*, int, int);
-void sortAndPrintList(List*, int, int);
+void mergeSortAndPrint(List*, int, int);
 
 void mergeList(List*, int, int, int);
 void swap(Element*, Element*);

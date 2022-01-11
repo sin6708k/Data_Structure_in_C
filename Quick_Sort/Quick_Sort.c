@@ -9,26 +9,26 @@ int main()
 
 	int capacity;
 	fscanf_s(file, "%d", &capacity);
-	List* list = newList(capacity);
+	List* list = createList(capacity);
 
 	for (int i = 0; i < capacity; i++)
 	{
 		int key;
 		fscanf_s(file, "%d", &key);
-		addToList(list, newElement(key));
+		addToList(list, createElement(key));
 	}
 
 	fclose(file);
 
 	printList(list);
-	sortAndPrintList(list, 0, list->count - 1);
+	quickSortAndPrint(list, 0, list->count - 1);
 	printList(list);
 
 	releaseList(list);
 	return 0;
 }
 
-List* newList(int capacity)
+List* createList(int capacity)
 {
 	List* list = malloc(sizeof(*list));
 	list->items = malloc(sizeof(*list->items) * capacity);
@@ -37,27 +37,27 @@ List* newList(int capacity)
 	return list;
 }
 
+Element createElement(int key)
+{
+	Element element;
+	element.key = key;
+	return element;
+}
+
+Element emptyElement()
+{
+	return createElement(INT_MIN);
+}
+
 void releaseList(List* list)
 {
 	free(list->items);
 	free(list);
 }
 
-void addToList(List* list, Element item)
+void addToList(List* list, Element element)
 {
-	list->items[list->count++] = item;
-}
-
-Element newElement(int key)
-{
-	Element item;
-	item.key = key;
-	return item;
-}
-
-Element emptyElement()
-{
-	return newElement(INT_MIN);
+	list->items[list->count++] = element;
 }
 
 void printList(List* list)
@@ -80,7 +80,7 @@ void printListWithHeader(List* list, int left, int right)
 	printf("\n");
 }
 
-void sortAndPrintList(List* list, int left, int right)
+void quickSortAndPrint(List* list, int left, int right)
 {
 	if (left >= right)
 		return;
@@ -104,8 +104,8 @@ void sortAndPrintList(List* list, int left, int right)
 	swap(&items[left], &items[j]);
 
 	printListWithHeader(list, left, right);
-	sortAndPrintList(list, left, j - 1);
-	sortAndPrintList(list, j + 1, right);
+	quickSortAndPrint(list, left, j - 1);
+	quickSortAndPrint(list, j + 1, right);
 }
 
 void swap(Element* item1, Element* item2)

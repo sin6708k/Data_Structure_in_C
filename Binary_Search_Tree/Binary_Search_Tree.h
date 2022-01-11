@@ -9,15 +9,16 @@ typedef struct Element
 
 typedef struct BinTreeNode
 {
-	Element item;
+	Element element;
 	struct BinTreeNode* leftChild;
 	struct BinTreeNode* rightChild;
 } BinTreeNode;
 
+Element createElement(int);
+Element emptyElement();
+
 void releaseBinTree(BinTreeNode*);
 
 void pushIntoBinTree(BinTreeNode**, Element);
-Element newElement(int);
-Element emptyElement();
 
 void printBinTree(const BinTreeNode*);
